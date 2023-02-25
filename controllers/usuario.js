@@ -34,26 +34,26 @@ Usuario.registrar = async (req, res) => {
 
 Usuario.iniciar = async (req, res) => {
 
-    try{
+    try {
 
         // Busca al usuario en la base de datos.
         const queryT = util.promisify(conn.conf.query).bind(conn.conf);
         const rowsT = await queryT('select * from Usuario where usuario like ?', [req.body.usuario]);
-        if(rowsT.length < 1) throw 'No se encontró el usuario.';
+        if (rowsT.length < 1) throw 'No se encontró el usuario.';
 
         // Valida la contraseña
         const encripted = rowsT[0].contrasena;
         const compare = await bcrypt.compare(req.body.contrasena, encripted);
-        if(!compare) throw 'La contraseña no coinside';
+        if (!compare) throw 'La contraseña no coinside';
 
         //Genera el token
-        const payload = {id: rowsT[0].id};
+        const payload = { id: rowsT[0].id };
         const token = await jwt.sign(payload, 'Secreto');
 
         // Envia el token del usuario.
-        res.send({Mensaje: `Bienvenido ${req.body.usuario}`, Token: token}).status(200);
-    }catch (e) {
-        res.send({Mensaje: 'Error al ejecutar el query.', Error: e}).status(400);
+        res.send({ Mensaje: `Bienvenido ${req.body.usuario}`, Token: token }).status(200);
+    } catch (e) {
+        res.send({ Mensaje: 'Error al ejecutar el query.', Error: e }).status(400);
     }
 }
 
