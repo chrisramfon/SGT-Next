@@ -28,7 +28,7 @@ Usuario.registrar = async (req, res) => {
         res.send({ Mensaje: `Usuario ${usuario} registrado con éxito.`, rows: rowsU }).status(200);
 
     } catch (e) {
-        res.send({ Mensaje: 'Error al registrar al usuario.', Error: e }).status(200);
+        res.send({ Mensaje: 'Error al registrar al usuario.', Error: e }).status(400);
     }
 }
 
@@ -53,7 +53,7 @@ Usuario.iniciar = async (req, res) => {
         // Envia el token del usuario.
         res.send({Mensaje: `Bienvenido ${req.body.usuario}`, Token: token}).status(200);
     }catch (e) {
-        res.send({Mensaje: 'Error al ejecutar el query.', Error: e});
+        res.send({Mensaje: 'Error al ejecutar el query.', Error: e}).status(400);
     }
 }
 
