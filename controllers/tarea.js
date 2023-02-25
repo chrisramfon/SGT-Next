@@ -32,39 +32,59 @@ Tarea.Registrar = async (req, res) => {
 
 Tarea.Borrar = async (req, res) => {
 
-    try{
+    try {
 
         // Válida el token.
         const decoded = await jwt.verify(req.body.token, 'Secreto');
         const user = decoded.id;
-        
+
         // Elimina la tarea
         const queryB = util.promisify(conn.conf.query).bind(conn.conf);
         const rowsB = await queryB('delete from Tarea where id = ?'
-        ,[req.body.id]);
+            , [req.body.id]);
 
         // Mensaje de confirmación.
-        res.send({Mensaje: 'Tarea eliminada.', rows: rowsB}).status(200);
-    }catch (e){
-        res.send({Mensaje: 'No se pudo eliminar la tarea', Error: e}).status(400);
+        res.send({ Mensaje: 'Tarea eliminada.', rows: rowsB }).status(200);
+    } catch (e) {
+        res.send({ Mensaje: 'No se pudo eliminar la tarea', Error: e }).status(400);
     }
 
 }
 
 Tarea.MostrarTareas = async (req, res) => {
 
-    try{
+    try {
         // Válida el token.
         const decoded = await jwt.verify(req.body.token, 'Secreto');
         const user = decoded.id;
 
         // Busca las tareas.
-        conn.conf.query('select titulo, estatus, fechaE from Tarea', function(error, results, fields){
-            res.send({Mensaje: 'Tareas encontradas.', Tareas: results}).status(200);
+        conn.conf.query('select titulo, estatus, fechaE from Tarea', function (error, results, fields) {
+            res.send({ Mensaje: 'Tareas encontradas.', Tareas: results }).status(200);
         });
-    }catch (e){
-        res.send({Mensaje: 'No se pudieron buscar las recetas.', Error: e});
+    } catch (e) {
+        res.send({ Mensaje: 'No se pudieron buscar las recetas.', Error: e });
     }
+}
+
+Tarea.MostrarTarea = async (req, res) => {
+
+    try {
+
+        // Válida el token.
+        const decoded = await jwt.verify(req.body.token, 'Secreto');
+        const user = decoded.id;
+
+        const queryT = util.promisify(conn.conf.query).bind(conn.conf);
+        const rowsT = await queryT('select * from Tarea where id = ?'
+        ,[req.body.id]);
+
+        res.send({Mensaje: 'Tarea encontrada', Tarea: rowsT}).status(200);
+
+    } catch (e) {
+        res.send({Mensaje: 'No se encontró la tarea', Error: e}).status(400);
+    }
+
 }
 
 module.exports = Tarea;

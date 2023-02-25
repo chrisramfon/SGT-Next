@@ -12,7 +12,7 @@ router.get('/todas', tarea.MostrarTareas);
 
 router.delete('/eliminar', tarea.Borrar);
 
-
+router.get('/tarea', tarea.MostrarTarea);
 
 
 module.exports = router;
