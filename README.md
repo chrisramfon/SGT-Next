@@ -8,4 +8,4 @@ Este repositorio contiene el Sistema de Gestión de Tareas o "SGT".
 
 ## Herramienta utilizada para tests
 
--Postman
+- Postman
