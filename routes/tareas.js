@@ -10,9 +10,12 @@ router.post('/registrar', tarea.Registrar);
 
 router.get('/todas', tarea.MostrarTareas);
 
+router.put('/modificar', tarea.Modificar);
+
 router.delete('/eliminar', tarea.Borrar);
 
 router.get('/tarea', tarea.MostrarTarea);
+
 
 
 module.exports = router;
