@@ -5,3 +5,7 @@ Este repositorio contiene el Sistema de Gestión de Tareas o "SGT".
 - Json Web Token
 - Bcrypt
 - Mysql
+
+## Herramienta utilizada para tests
+
+-Postman
