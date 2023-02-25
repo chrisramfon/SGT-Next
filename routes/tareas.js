@@ -8,5 +8,11 @@ router.get('/', function(req, res, next) {
 
 router.post('/registrar', tarea.Registrar);
 
+router.get('/todas', tarea.MostrarTareas);
+
+router.delete('/eliminar', tarea.Borrar);
+
+
+
 
 module.exports = router;
