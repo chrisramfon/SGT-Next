@@ -15,7 +15,6 @@ Tarea.Registrar = async (req, res) => {
 
         const boo = false;
 
-        console.log(user);
         // Registra la tarea.
         const queryT = util.promisify(conn.conf.query).bind(conn.conf);
         const rowsT = await queryT(
@@ -43,6 +42,8 @@ Tarea.Borrar = async (req, res) => {
         const rowsB = await queryB('delete from Tarea where id = ?'
             , [req.body.id]);
 
+        if(rowsB.affectedRows == 0) throw `No se encontró la tarea con el id ${req.body.id}.`; 
+
         // Mensaje de confirmación.
         res.send({ Mensaje: 'Tarea eliminada.', rows: rowsB }).status(200);
     } catch (e) {
@@ -57,10 +58,13 @@ Tarea.MostrarTareas = async (req, res) => {
         // Válida el token.
         const decoded = await jwt.verify(req.body.token, 'Secreto');
         const user = decoded.id;
-
+        let mensaje = 'Tareas encontradas.';
         // Busca las tareas.
         conn.conf.query('select titulo, estatus, fechaE from Tarea', function (error, results, fields) {
-            res.send({ Mensaje: 'Tareas encontradas.', Tareas: results }).status(200);
+            
+            if(!results[0]) mensaje = 'Ninguna tarea registrada en la base de datos.';
+            
+            res.send({ Mensaje: mensaje, Tareas: results }).status(200);
         });
     } catch (e) {
         res.send({ Mensaje: 'No se pudieron buscar las recetas.', Error: e });
@@ -79,6 +83,8 @@ Tarea.MostrarTarea = async (req, res) => {
         const queryT = util.promisify(conn.conf.query).bind(conn.conf);
         const rowsT = await queryT('select * from Tarea where id = ?'
             , [req.body.id]);
+
+        if(!rowsT[0]) throw `No se encontró la tarea con el id ${req.body.id}`; 
 
         // Mensaje de confirmación.
         res.send({ Mensaje: 'Tarea encontrada', Tarea: rowsT }).status(200);
@@ -101,6 +107,8 @@ Tarea.Modificar = async (req, res) => {
         const queryU = util.promisify(conn.conf.query).bind(conn.conf);
         const rowsU = await queryU('update Tarea set titulo = ?, descripcion = ?, estatus = ?, fechaE = ?, comentarios = ?, responsable = ?, tags = ? where id = ?'
             , [req.body.titulo, req.body.descripcion, req.body.estatus, req.body.fechaE, req.body.comentarios, req.body.responsable, req.body.tags, req.body.id]);
+
+        if(rowsU.affectedRows == 0) throw `No se encontró la tarea con el id ${req.body.id}.`;
 
         // Mensaje de confirmación.
         res.send({ Mensaje: 'Tarea modificada', rows: rowsU }).status(200);
