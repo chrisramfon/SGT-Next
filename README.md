@@ -1,5 +1,5 @@
 # SGT-Next
-Este repositorio contiene el Sistema de Gestión de Tareas o "SGT".
+Este repositorio contiene el Sistema de Gestión de Tareas o "SGT" que es parte del ejercicio para aplicar a la vacante de programador backend.
 
 ## Dependencias
 - Json Web Token
@@ -7,7 +7,7 @@ Este repositorio contiene el Sistema de Gestión de Tareas o "SGT".
 - Mysql
 - util
 
-## Herramienta utilizada para tests
+## Herramienta utilizada para las pruebas del código
 
 - Postman
 
