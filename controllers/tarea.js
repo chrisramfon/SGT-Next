@@ -42,7 +42,7 @@ Tarea.Borrar = async (req, res) => {
         const rowsB = await queryB('delete from Tarea where id = ?'
             , [req.body.id]);
 
-        if(rowsB.affectedRows == 0) throw `No se encontró la tarea con el id ${req.body.id}.`; 
+        if (rowsB.affectedRows == 0) throw `No se encontró la tarea con el id ${req.body.id}.`;
 
         // Mensaje de confirmación.
         res.send({ Mensaje: 'Tarea eliminada con éxito.', rows: rowsB }).status(200);
@@ -61,9 +61,9 @@ Tarea.MostrarTareas = async (req, res) => {
         let mensaje = 'Tareas encontradas.';
         // Busca las tareas.
         conn.conf.query('select titulo, estatus, fechaE from Tarea', function (error, results, fields) {
-            
-            if(!results[0]) mensaje = 'Ninguna tarea registrada en la base de datos.';
-            
+
+            if (!results[0]) mensaje = 'Ninguna tarea registrada en la base de datos.';
+
             res.send({ Mensaje: mensaje, Tareas: results }).status(200);
         });
     } catch (e) {
@@ -84,7 +84,7 @@ Tarea.MostrarTarea = async (req, res) => {
         const rowsT = await queryT('select * from Tarea where id = ?'
             , [req.body.id]);
 
-        if(!rowsT[0]) throw `No se encontró la tarea con el id ${req.body.id}.`; 
+        if (!rowsT[0]) throw `No se encontró la tarea con el id ${req.body.id}.`;
 
         // Mensaje de confirmación.
         res.send({ Mensaje: 'Tarea encontrada.', Tarea: rowsT }).status(200);
@@ -108,7 +108,7 @@ Tarea.Modificar = async (req, res) => {
         const rowsU = await queryU('update Tarea set titulo = ?, descripcion = ?, estatus = ?, fechaE = ?, comentarios = ?, responsable = ?, tags = ? where id = ?'
             , [req.body.titulo, req.body.descripcion, req.body.estatus, req.body.fechaE, req.body.comentarios, req.body.responsable, req.body.tags, req.body.id]);
 
-        if(rowsU.affectedRows == 0) throw `No se encontró la tarea con el id ${req.body.id}.`;
+        if (rowsU.affectedRows == 0) throw `No se encontró la tarea con el id ${req.body.id}.`;
 
         // Mensaje de confirmación.
         res.send({ Mensaje: 'Tarea modificada con éxito.', rows: rowsU }).status(200);
