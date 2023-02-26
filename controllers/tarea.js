@@ -45,9 +45,9 @@ Tarea.Borrar = async (req, res) => {
         if(rowsB.affectedRows == 0) throw `No se encontró la tarea con el id ${req.body.id}.`; 
 
         // Mensaje de confirmación.
-        res.send({ Mensaje: 'Tarea eliminada.', rows: rowsB }).status(200);
+        res.send({ Mensaje: 'Tarea eliminada con éxito.', rows: rowsB }).status(200);
     } catch (e) {
-        res.send({ Mensaje: 'No se pudo eliminar la tarea', Error: e }).status(400);
+        res.send({ Mensaje: 'No se pudo eliminar la tarea.', Error: e }).status(400);
     }
 
 }
@@ -67,7 +67,7 @@ Tarea.MostrarTareas = async (req, res) => {
             res.send({ Mensaje: mensaje, Tareas: results }).status(200);
         });
     } catch (e) {
-        res.send({ Mensaje: 'No se pudieron buscar las recetas.', Error: e });
+        res.send({ Mensaje: 'No se pudieron buscar las recetas.', Error: e }).status(400);
     }
 }
 
@@ -84,13 +84,13 @@ Tarea.MostrarTarea = async (req, res) => {
         const rowsT = await queryT('select * from Tarea where id = ?'
             , [req.body.id]);
 
-        if(!rowsT[0]) throw `No se encontró la tarea con el id ${req.body.id}`; 
+        if(!rowsT[0]) throw `No se encontró la tarea con el id ${req.body.id}.`; 
 
         // Mensaje de confirmación.
-        res.send({ Mensaje: 'Tarea encontrada', Tarea: rowsT }).status(200);
+        res.send({ Mensaje: 'Tarea encontrada.', Tarea: rowsT }).status(200);
 
     } catch (e) {
-        res.send({ Mensaje: 'No se encontró la tarea', Error: e }).status(400);
+        res.send({ Mensaje: 'No se encontró la tarea.', Error: e }).status(400);
     }
 
 }
@@ -111,7 +111,7 @@ Tarea.Modificar = async (req, res) => {
         if(rowsU.affectedRows == 0) throw `No se encontró la tarea con el id ${req.body.id}.`;
 
         // Mensaje de confirmación.
-        res.send({ Mensaje: 'Tarea modificada', rows: rowsU }).status(200);
+        res.send({ Mensaje: 'Tarea modificada con éxito.', rows: rowsU }).status(200);
     } catch (e) {
         res.send({ Mensaje: 'No se pudo modificar la tarea.', Error: e }).status(400);
     }
